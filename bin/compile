@@ -112,6 +112,7 @@ if [ ! -f requirements.txt ]; then
 fi
 
 # ### The Cache
+rm -rf $CACHE_DIR
 mkdir -p $CACHE_DIR
 [ ! "$(ls -A $CACHE_DIR)" ] && export FRESH_APP=1
 
@@ -145,6 +146,7 @@ done
 
 set +e
 # Create set-aside `.heroku` folder.
+rm -rf .heroku
 mkdir .heroku &> /dev/null
 HEROKU_DIR_STATUS=$?
 
@@ -168,6 +170,7 @@ puts-step "Preparing Python interpreter ($PYTHON_VERSION)"
 puts-step "Creating Virtualenv version $(virtualenv --version)"
 
 # Try to create the virtualenv.
+rm -rf $VIRTUALENV_LOC
 OUT=$(virtualenv --python $PYTHON_EXE --distribute --never-download --prompt='(venv) ' $VIRTUALENV_LOC 2>&1)
 
 [ $? -ne 0 -o -n "$CLEAN_VIRTUALENV" ] && {
